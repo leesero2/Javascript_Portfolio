@@ -62,5 +62,5 @@ const movingItem = {
     type: "tree",
     direction: 0,
     top: 0,
-    left: 3,
+    left: 0,
 };
