@@ -1,0 +1,38 @@
+
+/* div{position:absolute;} */
+input{position:relative;left:550px;top:800px;}
+#score{position:relative;}
+
+.playground{
+    width: auto;
+    height: auto;
+}
+
+.word{
+    position: absolute;
+}
+
+/* #score{
+    width: auto;
+    height: auto;
+} */
+
+body{
+    height: 100%;
+    background:lightblue;
+}
+
+
+/* 단어 내려오는 효과 */
+.suddens{
+    background : #FAE0D4; color : red;
+}
+.zigs{
+    background : pink; color : black;
+}
+.fasts{
+    background : blue; color : yellow;
+}
+.gogos{
+    background : black; color : white;
+}
