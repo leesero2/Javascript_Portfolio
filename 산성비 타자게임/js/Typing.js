@@ -1,10 +1,9 @@
-
 var words = ["the","of","and","to","in","you","for","or","it","as","be","on","with","can","have","this","by","not","but","at","from","they","more"
          ,"will","if","some","there","what","about","which","when","one","all","also",
          "him","her","hello","java","script","project","juice","math","tree","cloth","key","board","mouse","paper","bot","dry",
          "book","mac","com","naver","cup","top","good","excel","nice","gang","bro","sis","bag","pad","arm","nose","hair","head","leg",
          "sharp","pen","hold","hole","open","close","pin","ear","eye","mouth","clock","peak","tear","drop","rain","bow","pair","team",
-         "candy","rice","food","meat","pork","fruit","gum","meal","fast","go","zig","zag","super","dad","mom","uncle","grand"]//100
+         "candy","rice","food","meat","pork","fruit","gum","meal","fast","go","zig","zag","super","dad","mom","uncle","grand"] //100
 
 var a = '#' //단어
 var x = 0;
@@ -14,23 +13,25 @@ var p = 0;    //랜덤으로 단어 생성 변수
 var speed = 0;
 var level = 0;
 
-$(function(){   //함수 생성
-  $('playground').hide();  // 영역지정
-});
+// $(function(){   //함수 생성
+//   $('div').hide();  // hide로 div 테그부분을 숨김
+// });
 
 alert("게임을 시작합니다.") 
 
 setTimeout(function(){      //특정 시간이 되면 특정함수를 자동 실행하는 코드
-   clearInterval(intervalID);
-},1000000000) //1000000000    - 지정한 시간동안 단어를 생성 (연구결과 5000은 2개 10000은 4개)
+   wrodsmake(); //해당 함수를 실행
+},100) //이 시간이 흘러야 함수를 실행
 
-var intervalID = setInterval(function(){
+function wrodsmake(){
+setInterval(function(){
    x++;
    a = '#' + x;
-   if(x==10)
-      x=0;
-   p = Math.floor(Math.random()*8 + 1)
-   if(p<=4)
+   if(x == 10)
+      x = 0;
+   p = Math.floor(Math.random() * 11) //0~10
+   
+   if(p <= 4)
    {
       gogo();    //떨어지는거
       $(function(){
@@ -38,7 +39,7 @@ var intervalID = setInterval(function(){
         base.addClass('gogos');
       });
    }
-  else if(p<=6) //
+  else if(p <= 6) //
    {
      zig();   //지그재그
      $(function(){
@@ -47,7 +48,7 @@ var intervalID = setInterval(function(){
      });
 
   }
-   else if(p<=6) //빠르게 떨어지는거
+   else if(p <= 6) //빠르게 떨어지는거
    {
       fast();
       $(function(){
@@ -56,7 +57,7 @@ var intervalID = setInterval(function(){
       });
 
    }
-   else if(p<=8) //10
+   else if(p <= 8) //10
    {
       sudden();   //갑자기 생성되는거
       $(function(){
@@ -65,7 +66,7 @@ var intervalID = setInterval(function(){
       });
    }
 },2000);    //단어가 생성되는 속도
-
+}
 
 function displayKeyCode(itag)
 {
@@ -119,7 +120,7 @@ function gogo(){
    });
    $(function(){
         $(a).animate({
-           left:Math.floor(Math.random()*1000)
+           left:Math.floor(Math.random()*300) //랜덤함수로 해당위치를 지정
           },1,
           function(){
              $(a).show();
