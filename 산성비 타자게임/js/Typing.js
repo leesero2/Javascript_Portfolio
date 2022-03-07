@@ -15,7 +15,7 @@ var speed = 0;
 var level = 0;
 
 $(function(){   //함수 생성
-  $('div').hide();  // 영역지정
+  $('playground').hide();  // 영역지정
 });
 
 alert("게임을 시작합니다.") 
@@ -38,15 +38,15 @@ var intervalID = setInterval(function(){
         base.addClass('gogos');
       });
    }
-  // else if(p<=6) //
-   //{
-  //    zig();   //지그재그
-  //    $(function(){
-  //      var base = $(a);
-  //      base.addClass('zigs');
-  //    });
+  else if(p<=6) //
+   {
+     zig();   //지그재그
+     $(function(){
+       var base = $(a);
+       base.addClass('zigs');
+     });
 
-//   }
+  }
    else if(p<=6) //빠르게 떨어지는거
    {
       fast();

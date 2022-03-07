@@ -1,15 +1,30 @@
 
 /* div{position:absolute;} */
-input{position:relative;left:550px;top:800px;}
-#score{position:relative;}
+
+/* 입력부분 */
+input{
+    /* position: relative; */
+    margin-top: 100%;
+    margin-bottom: 100%;
+    padding: auto;
+    /* left:50%;
+    bottom:20%; */
+    width: 200px;
+}
+
+#score{
+    position:relative;
+}
 
 .playground{
-    width: auto;
-    height: auto;
+    width:600px;
+	height:400px;
 }
 
 .word{
     position: absolute;
+    
+
 }
 
 /* #score{
@@ -18,10 +33,9 @@ input{position:relative;left:550px;top:800px;}
 } */
 
 body{
-    height: 100%;
     background:lightblue;
+    font-size: large;
 }
-
 
 /* 단어 내려오는 효과 */
 .suddens{
