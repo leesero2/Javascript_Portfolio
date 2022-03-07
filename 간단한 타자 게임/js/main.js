@@ -7,6 +7,10 @@ let timeInterval;
 let checkInterval;
 let words = [];
 
+//var 변수는 요즘 잘 사용안함 (변수 이름을 동일한걸로 적용해도 에러가 안뜸)
+//const변수는 상수
+//let은 변하는 변수
+
 //계속해서 도큐먼트.쿼리 셀렉트 적기 귀찮으니까 변수로 지정을 함
 const wordInput = document.querySelector('.word-input'); 
 const wordDisplay = document.querySelector('.word-display'); 
@@ -44,6 +48,7 @@ function getWords(){
     "book","mac","com","naver","cup","top","good","excel","nice","gang","bro","sis","bag","pad","arm","nose","hair","head","leg",
     "sharp","pen","hold","hole","open","close","pin","ear","eye","mouth","clock","peak","tear","drop","rain","bow","pair","team",
     "candy","rice","food","meat","pork","fruit","gum","meal","fast","go","zig","zag","super","dad","mom","uncle","grand"];
+
     buttonChange('게임시작') //버튼이 바뀜
 }
 
