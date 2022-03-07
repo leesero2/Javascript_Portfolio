@@ -76,7 +76,7 @@ function checkMatch(){
 buttonChange('게임시작')
 
 
-
+//카운트 다운 함수
 function countDown(){
     //삼항 연산자를 사용 (조건) ? 참일경우 : 거짓일 경우
     time > 0 ? time -- : isPlaying = false;
@@ -88,6 +88,7 @@ function countDown(){
 
 }
 
+//버튼 체인지 함수
 function buttonChange(text){
     button.innerHTML = text;
     text === '게임시작' ? button.classList.remove('loading') : button.classList.add('loading')
