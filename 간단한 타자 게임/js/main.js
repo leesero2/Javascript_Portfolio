@@ -47,6 +47,7 @@ function getWords(){
     buttonChange('게임시작') //버튼이 바뀜
 }
 
+//체크 상태 함수
 function checkStatus(){
     if(!isPlaying && time === 0){
         // === 등호가 3개이면 비교하는 타입까지 비교를 함 (정수형 문자형 타입말하는거임)
