@@ -1,13 +1,12 @@
 // 사용변수
 const GAME_TIME = 9;
 let score = 0;
-let time = GAME_TIME;
+let time = 0;
 let isPlaying = false;
 let timeInterval;
 let checkInterval;
 let words = [];
-
-//let stage = 1;
+let stageTime = 9;
 
 //var 변수는 요즘 잘 사용안함 (변수 이름을 동일한걸로 적용해도 에러가 안뜸)
 //const변수는 상수
@@ -39,34 +38,27 @@ function run(){
     scoreDisplay.innerText = 0;
     timeInterval = setInterval(countDown, 1000); //시간을 시작
     checkInterval = setInterval(checkStatus,50);
-    //stage = clearInterval(stageup); //한번만 실행을 하길 원함
     buttonChange('게임중')
     stageup()
-    // if(score > 10){
-    //     console.log("dddd")
-    //     stageup();
-    // }
+    
 }
 
 //단계 함수
 function stageup(){
-    alert("시간을 단축합니다!ㅇㅇ")
     if(score == 5){
-        //score++;
-        time--;
-        //alert("테스트!.")
-        //break checkMatch(score)
-    }else if(score > 10){
-        time--;
+        stageTime--;
         alert("시간을 단축합니다!.")
-    }else if(score > 50){
-        time--;
+    }else if(score == 2){
+        stageTime--;
         alert("시간을 단축합니다!.")
-    }else if(score > 100){
-        time--;
+    }else if(score == 4){
+        stageTime--;
         alert("시간을 단축합니다!.")
-    }else if(score == 1000){
-        alert("클리어!")
+    }else if(score == 7){
+        stageTime--;
+        alert("시간을 단축합니다!.")
+    }else if(score == 10){
+        GameWin()
     }
 }
 
@@ -100,10 +92,12 @@ function checkMatch(){
         }
         score++; //스코어증가
         scoreDisplay.innerText = score; //스코어를 증가를 나타냄
-        time = GAME_TIME; //시간 초기화
+        //time = GAME_TIME; //시간 초기화
+        time = stageTime; //줄어든 시간으로 초기화
         const randomIndex = Math.floor(Math.random() * words.length);
         wordDisplay.innerText = words[randomIndex];
         stageup()
+        
     //console.log(wordInput.value.toLowerCase() === wordDisplay.innerText/toLowerCase())//저음 뜬 단어와 입력단어를 비교 innterText는 공백을 다 줄여주기때문에 사용
     //toLowerCase()는 소문자로 반환을 해줌
     }
@@ -111,7 +105,9 @@ function checkMatch(){
 }
 
 function GameWin(){
-    wordInput.innerHTML = "클리어를 축하드립니다!"
+    alert("클리어!")
+    wordDisplay.innerText = "클리어를 축하드립니다!"
+    clearInterval(timeInterval) //클리어 인터벌을 통해 중단 
 }
 
 //setInterval(countDown,1000); //바로 실행되는 함수임, 1초마다 시간을 줄어드는것
@@ -125,6 +121,7 @@ function countDown(){
     //time이 0보다 크게 될경우 시간을 --을 통해 감소시킴
     if(!isPlaying){ //게임을 플레이중이 아니라면
         clearInterval(timeInterval) //클리어 인터벌을 통해 중단 
+        alert("게임오버")
     }
     timeDisplay.innerText = time;
 
