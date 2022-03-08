@@ -57,3 +57,11 @@ body{
     background: #ccc;
     cursor: not-allowed;
 }
+
+.maker{
+    padding: auto;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bolder;
+    color: #3b5999;
+}

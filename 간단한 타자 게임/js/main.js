@@ -7,6 +7,8 @@ let timeInterval;
 let checkInterval;
 let words = [];
 
+//let stage = 1;
+
 //var 변수는 요즘 잘 사용안함 (변수 이름을 동일한걸로 적용해도 에러가 안뜸)
 //const변수는 상수
 //let은 변하는 변수
@@ -37,7 +39,35 @@ function run(){
     scoreDisplay.innerText = 0;
     timeInterval = setInterval(countDown, 1000); //시간을 시작
     checkInterval = setInterval(checkStatus,50);
+    //stage = clearInterval(stageup); //한번만 실행을 하길 원함
     buttonChange('게임중')
+    stageup()
+    // if(score > 10){
+    //     console.log("dddd")
+    //     stageup();
+    // }
+}
+
+//단계 함수
+function stageup(){
+    alert("시간을 단축합니다!ㅇㅇ")
+    if(score == 5){
+        //score++;
+        time--;
+        //alert("테스트!.")
+        //break checkMatch(score)
+    }else if(score > 10){
+        time--;
+        alert("시간을 단축합니다!.")
+    }else if(score > 50){
+        time--;
+        alert("시간을 단축합니다!.")
+    }else if(score > 100){
+        time--;
+        alert("시간을 단축합니다!.")
+    }else if(score == 1000){
+        alert("클리어!")
+    }
 }
 
 //단어 불러오기 함수
@@ -73,10 +103,17 @@ function checkMatch(){
         time = GAME_TIME; //시간 초기화
         const randomIndex = Math.floor(Math.random() * words.length);
         wordDisplay.innerText = words[randomIndex];
+        stageup()
     //console.log(wordInput.value.toLowerCase() === wordDisplay.innerText/toLowerCase())//저음 뜬 단어와 입력단어를 비교 innterText는 공백을 다 줄여주기때문에 사용
+    //toLowerCase()는 소문자로 반환을 해줌
+    }
+    
 }
-//toLowerCase()는 소문자로 반환을 해줌
+
+function GameWin(){
+    wordInput.innerHTML = "클리어를 축하드립니다!"
 }
+
 //setInterval(countDown,1000); //바로 실행되는 함수임, 1초마다 시간을 줄어드는것
 buttonChange('게임시작')
 
@@ -98,3 +135,4 @@ function buttonChange(text){
     button.innerHTML = text;
     text === '게임시작' ? button.classList.remove('loading') : button.classList.add('loading')
 }
+
