@@ -111,6 +111,8 @@ function checkMatch(){ //같은줄을 지우는 함수
         if(matched){
             child.remove();
             prependNewLine()
+            score++;
+            scoreDisplay.innerHTML = score;
         }
     })
     generateNewBlock()
