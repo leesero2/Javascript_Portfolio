@@ -1,4 +1,10 @@
+import BLOCKS from "./block.js"
+
+
 const playground = document.querySelector(".playground > ul");
+const gameText = document.querySelector(".game-text");
+const scoreDisplay = document.querySelector(".score");
+const restartButton = document.querySelector(".game-text > button");
 
 //Setting
 const GAME_ROWS = 20;
@@ -10,20 +16,13 @@ let duration = 500;
 let downInterval;
 let tempMovingItem;
 
-const BLOCKS = { // ㅗ 모양
-    tree: [
-        [[2,1],[0,1],[1,0],[1,1]], //초기모양
-        [], //오른쪽으로 한번 돌린모양
-        [], //오른쪽으로 두번 돌린모양
-        [], //오른쪽으로 세번 돌린모양
-    ]
-}
+
 
 const movingItem = { 
     type: "tree",
-    direction: 0,
+    direction: 3,
     top: 0,
-    left: 3,
+    left: 0,
 };
 
 //functions 스크립트가 호출이될때 시작이 되는 함수
@@ -34,7 +33,7 @@ function init() {
     for(let i = 0; i < GAME_ROWS; i++){
         prependNewLine()
     }
-    renderBlocks() //블럭을 랜더
+    generateNewBlock() //블럭을 랜더
 }
 
 //functions
@@ -50,41 +49,116 @@ function prependNewLine(){
 }
 
 //블럭을 렌더링 하는 함수
-function renderBlocks(){
+function renderBlocks(moveType = ""){
     const {type, direction, top, left} = tempMovingItem;
     const movingBlocks = document.querySelectorAll(".moving");
     movingBlocks.forEach(moving =>{
         moving.classList.remove(type,"moving");
     })
-    BLOCKS[type][direction].forEach(block => {
+    BLOCKS[type][direction].some(block => {
         const x = block[0] + left; //x좌표를 left에 더해서 값이 대입됨
         const y = block[1] + top; //y좌표를 top에 더해서 값이 대입됨
         //삼항연산자 - 조건 ? 참일경우 : 거짓일경우
-        const target = playground.childNodes[y] ? playground.childNodes[0].childNodes[x] : null;
+        const target = playground.childNodes[y] ? playground.childNodes[y].childNodes[0].childNodes[x] : null;
         const isAvailable = checkEmpty(target);
         if(isAvailable){ 
-        target.classList.add(type, "moving")
+            target.classList.add(type, "moving")
         }else{
             tempMovingItem = {...movingItem }
-            // setTimeout(() =>{
-            //     renderBlocks();
-            // },0)
+            if(moveType === 'retry'){
+                clearInterval(downInterval)
+                ShowGameOver()
+            }
+            setTimeout(() =>{
+                renderBlocks('retry')
+                if(moveType === "top"){
+                    seizeBlock();
+                }
+                renderBlocks();
+            },0)
             //renderBlocks();
+            return true;
         }
-    });
+    })
+    movingItem.left = left;
+    movingItem.top = top;
+    movingItem.direction = direction;
+}
+
+function seizeBlock(){ //고정시키는 함수
+    const movingBlocks = document.querySelectorAll(".moving");
+    movingBlocks.forEach(moving =>{
+        moving.classList.remove("moving");
+        moving.classList.add("seized");
+    })
+    checkMatch()
+    //generateNewBlock()
+}
+
+function ShowGameOver(){
+    gameText.style.display = "flex"
+}
+
+function checkMatch(){ //같은줄을 지우는 함수
+    const childNodes = playground.childNodes;
+    childNodes.forEach(child=>{
+        let matched = true;
+        child.children[0].childNodes.forEach(li=>{
+            if(!li.classList.contains("seized")){
+                matched = false;
+            }
+        })
+        if(matched){
+            child.remove();
+            prependNewLine()
+        }
+    })
+    generateNewBlock()
+}
+
+function generateNewBlock(){
+
+    clearInterval(downInterval);
+    downInterval = setInterval(()=>{
+        moveBlock('top',1)
+    },duration)
+
+
+    const blockArray = Object.entries(BLOCKS);
+    const randomIndex = Math.floor(Math.random() * blockArray.length)
+    
+    movingItem.type = blockArray[randomIndex][0]
+    movingItem.top = 0;
+    movingItem.left = 3;
+    movingItem.direction = 0;
+    tempMovingItem = {...movingItem};
+    renderBlocks()
 }
 
 function checkEmpty(target){
-    if(!target){
+    if(!target || target.classList.contains("seized")){
         return false;
     }
     return true;
 }
 
+function changeDirection(){ //도형 회전 함수
+    const direction = tempMovingItem.direction;
+    direction === 3 ? tempMovingItem.direction = 0 : tempMovingItem.direction +=1;
+    renderBlocks()
+}
+
 
 function moveBlock(moveType, amount){
     tempMovingItem[moveType] += amount;
-    renderBlocks()
+    renderBlocks(moveType)
+}
+
+function dropBlock(){ //스페이스바 함수
+    clearInterval(downInterval);
+    downInterval = setInterval(()=>{
+        moveBlock('top',1)
+    },10)
 }
 
 //이벤트 핸들링 
@@ -98,11 +172,22 @@ document.addEventListener("keydown", e=>{
             break;
         case 40:
             moveBlock("top", 1);
+            break;
         default:
             break;
-
+        case 38:
+            changeDirection();
+            break;
+        case 32:
+            dropBlock();
+            break;
     }
     console.log(e)
 })
 
-
+//다시시작 버튼 이벤트 클리너
+restartButton.addEventListener("click",()=>{
+    gameText.style.display = "none";
+    playground.innerHTML = "";
+    init()
+})

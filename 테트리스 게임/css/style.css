@@ -18,6 +18,29 @@ body{
     margin-bottom: 2rem;
 }
 
+.game-text{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    left: 0;
+    top:0;
+    color: #fff;
+    font-size: 50px;
+}
+
+.game-text > button{
+    padding: 0.5rem 1rem;
+    color: #fff;
+    background-color: salmon;
+    border: none;
+    cursor: pointer;
+}
+
 .playground > ul {
     border: 1px solid #333;
     width: 250px;
@@ -40,5 +63,20 @@ body{
 }
 
 .tree {
+    background: red
+}
+.bar{
+    background: purple
+}
+.zee{
+    background: yellow
+}
+.elLeft{
+    background: blue
+}
+.elRight{
     background: green
+}
+.square{
+    background:orange
 }
