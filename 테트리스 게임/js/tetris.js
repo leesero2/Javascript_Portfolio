@@ -1,4 +1,4 @@
-import BLOCKS from "./block.js"
+import BLOCKS from "./block.js" //block.js 부분을 import 소스
 
 
 const playground = document.querySelector(".playground > ul");
@@ -15,8 +15,7 @@ let score = 0;
 let duration = 500;
 let downInterval;
 let tempMovingItem;
-
-
+let stage = 0;
 
 const movingItem = { 
     type: "tree",
@@ -47,6 +46,8 @@ function prependNewLine(){
     li.prepend(ul)
     playground.prepend(li)
 }
+
+
 
 //블럭을 렌더링 하는 함수
 function renderBlocks(moveType = ""){
@@ -119,13 +120,10 @@ function checkMatch(){ //같은줄을 지우는 함수
 }
 
 function generateNewBlock(){
-
     clearInterval(downInterval);
     downInterval = setInterval(()=>{
         moveBlock('top',1)
     },duration)
-
-
     const blockArray = Object.entries(BLOCKS);
     const randomIndex = Math.floor(Math.random() * blockArray.length)
     
