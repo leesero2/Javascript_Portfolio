@@ -59,18 +59,20 @@ function stageUP(){
 //블럭을 렌더링 하는 함수
 function renderBlocks(moveType = ""){
     const {type, direction, top, left} = tempMovingItem; //이렇게 { } 로 묶는게 편함
-    const movingBlocks = document.querySelectorAll(".moving");
-    movingBlocks.forEach(moving =>{
-        moving.classList.remove(type,"moving");
+    const movingBlocks = document.querySelectorAll(".moving"); //도형을 움직일때 그전위 위치를 지우기위한 소스 / 무빙 클래스를 가진 모든 요소들을 불러옴
+    movingBlocks.forEach(moving =>{ 
+        moving.classList.remove(type,"moving"); //움직일때 type 과 무빙 클래스를 지움 (이전의 위치를 지움)
     })
     BLOCKS[type][direction].some(block => { //type은 블록모양, direction은 좌표값 (모양) 을 접근함
-        const x = block[0] + left; //x좌표를 left에 더해서 값이 대입됨
-        const y = block[1] + top; //y좌표를 top에 더해서 값이 대입됨
+        const x = block[0] + left; //x좌표를 left에 더해서 값이 대입됨 (좌우로 움직이게함)
+        const y = block[1] + top; //y좌표를 top에 더해서 값이 대입됨 (아래로 떨어지게함)
         //삼항연산자 - 조건 ? 참일경우 : 거짓일경우
-        const target = playground.childNodes[y] ? playground.childNodes[y].childNodes[0].childNodes[x] : null;
-        const isAvailable = checkEmpty(target);
-        if(isAvailable){ 
-            target.classList.add(type, "moving")
+        const target = playground.childNodes[y] ? playground.childNodes[y].childNodes[0].childNodes[x] : null; 
+        //playground.childNodes[y] 가 있으면 playground.childNodes[y].childNodes[0].childNodes[x] 이값을 target에 저장하고
+        //없으면 null값을 저장
+        const isAvailable = checkEmpty(target);//checkEmpty는 값의 유무를 확인함
+        if(isAvailable){ //사용가능한 상황이라면
+            target.classList.add(type, "moving") 
         }else{
             tempMovingItem = {...movingItem }
             if(moveType === 'retry'){
@@ -169,10 +171,10 @@ function changeDirection(){ //도형 회전 함수
     renderBlocks()
 }
 
-
-function moveBlock(moveType, amount){
-    tempMovingItem[moveType] += amount;
-    renderBlocks(moveType)
+//블럭이 움직이는 함수
+function moveBlock(moveType, amount){ //movetype : left인지 top인지 
+    tempMovingItem[moveType] += amount; //렌더링을 tempMovingItem으로 값을 갖고오기 때문에 얘 값만 변경
+    renderBlocks(moveType) //다시한번더 렌더블럭
 }
 
 function dropBlock(){ //스페이스바 함수
