@@ -79,18 +79,18 @@ function renderBlocks(moveType = ""){
                 clearInterval(downInterval)
                 ShowGameOver()
             }
-            setTimeout(() =>{ 
+            setTimeout(() =>{  //게임 외 범위를 벗어나는것을 방지하기위해
                 renderBlocks('retry')
-                if(moveType === "top"){
-                    seizeBlock();
+                if(moveType === "top"){ //움직이는게 밑으로 떨어지는거라면
+                    seizeBlock(); //블럭을 고정시키는 함수 실행
                 }
-                renderBlocks();
+                renderBlocks(); //랜더
             },0)
             //renderBlocks();
             return true;
         }
     })
-    //movingItem 위치를 수정 (위의 조건을 다 만족하고 이제 위치를 잡아줌)
+    //movingItem 위치를 수정 (위의 조건을 다 만족하고 이제 위치를 잡아줌) 
     movingItem.left = left; 
     movingItem.top = top;
     movingItem.direction = direction;
