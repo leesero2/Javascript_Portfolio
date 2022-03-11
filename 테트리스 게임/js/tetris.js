@@ -21,15 +21,15 @@ let stage = 1;
 const movingItem = { 
     type: "tree",
     direction: 3, //방향키를 눌렀을때 좌우로 돌리는 역할을 하는 변수
-    top: 0,
-    left: 0,
+    top: 0, //좌표기준으로 어디까지 내려가야하는지 나타내줄 변수
+    left: 0, //좌표 기준으로 좌우 기준을 나타내줄 변수
 };
 
 //functions 스크립트가 호출이될때 시작이 되는 함수
 init()
 
 function init() {
-    tempMovingItem = { ...movingItem }; // {... } : 스프레드 오퍼레이터 -  이걸 하면 movingItem안의 값만 대입을 시킴
+    tempMovingItem = { ...movingItem }; // {... } : 스프레드 오퍼레이터 -  이걸 하면 movingItem안의 값만 대입을 시킴 (값을 복사한다 라고 생각하면 됨)
     for(let i = 0; i < GAME_ROWS; i++){ //세로부분 크기를 결정 
         prependNewLine()
     }
@@ -58,12 +58,12 @@ function stageUP(){
 
 //블럭을 렌더링 하는 함수
 function renderBlocks(moveType = ""){
-    const {type, direction, top, left} = tempMovingItem;
+    const {type, direction, top, left} = tempMovingItem; //이렇게 { } 로 묶는게 편함
     const movingBlocks = document.querySelectorAll(".moving");
     movingBlocks.forEach(moving =>{
         moving.classList.remove(type,"moving");
     })
-    BLOCKS[type][direction].some(block => {
+    BLOCKS[type][direction].some(block => { //type은 블록모양, direction은 좌표값 (모양) 을 접근함
         const x = block[0] + left; //x좌표를 left에 더해서 값이 대입됨
         const y = block[1] + top; //y좌표를 top에 더해서 값이 대입됨
         //삼항연산자 - 조건 ? 참일경우 : 거짓일경우
