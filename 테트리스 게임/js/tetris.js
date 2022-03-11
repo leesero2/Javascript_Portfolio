@@ -16,11 +16,11 @@ let score = 0;
 let duration = 500;
 let downInterval;
 let tempMovingItem;
-let stage = 0;
+let stage = 1;
 
 const movingItem = { 
     type: "tree",
-    direction: 3,
+    direction: 3, //방향키를 눌렀을때 좌우로 돌리는 역할을 하는 변수
     top: 0,
     left: 0,
 };
@@ -48,6 +48,12 @@ function prependNewLine(){
     playground.prepend(li)
 }
 
+//단계 증가 함수
+function stageUP(){
+    stage++;
+    alert(stage+"단계 시작")
+    stageLV.innerHTML = stage + "단계"
+}
 
 
 //블럭을 렌더링 하는 함수
@@ -114,7 +120,21 @@ function checkMatch(){ //같은줄을 지우는 함수
             child.remove();
             prependNewLine()
             score++;
-            scoreDisplay.innerHTML = "점수 : "+score;
+            scoreDisplay.innerHTML = "점수 : "+ score ;
+            if(score % 10 == 0){ //10점마다 단계를 상승
+                stageUP()
+            }
+            // switch(score){
+            //     case 3:
+            //         stageUP();
+            //         break;
+            //     case 5:
+            //         stageUP();
+            //         break;
+            //     case 10:
+            //         stageUP();
+            //         break;
+            // }
         }
     })
     generateNewBlock()
