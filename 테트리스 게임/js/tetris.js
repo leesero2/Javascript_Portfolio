@@ -5,6 +5,7 @@ const playground = document.querySelector(".playground > ul");
 const gameText = document.querySelector(".game-text");
 const scoreDisplay = document.querySelector(".score");
 const restartButton = document.querySelector(".game-text > button");
+const stageLV = document.querySelector(".stage");
 
 //Setting
 const GAME_ROWS = 20;
@@ -113,7 +114,7 @@ function checkMatch(){ //같은줄을 지우는 함수
             child.remove();
             prependNewLine()
             score++;
-            scoreDisplay.innerHTML = score;
+            scoreDisplay.innerHTML = "점수 : "+score;
         }
     })
     generateNewBlock()
