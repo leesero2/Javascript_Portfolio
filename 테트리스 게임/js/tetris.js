@@ -29,17 +29,17 @@ init()
 
 function init() {
     tempMovingItem = { ...movingItem }; // {... } : 스프레드 오퍼레이터 -  이걸 하면 movingItem안의 값만 대입을 시킴
-    for(let i = 0; i < GAME_ROWS; i++){
+    for(let i = 0; i < GAME_ROWS; i++){ //세로부분 크기를 결정 
         prependNewLine()
     }
     generateNewBlock() //블럭을 랜더
 }
 
-//functions
+//테트리스 칸을 만드는 함수
 function prependNewLine(){
     const li = document.createElement("li");
     const ul = document.createElement("ul");
-    for(let j = 0; j < 10; j++){
+    for(let j = 0; j < 10; j++){ //가로 크기를 결정
         const matrix = document.createElement("li");
         ul.prepend(matrix);
     }

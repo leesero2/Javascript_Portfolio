@@ -8,15 +8,20 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="header">
+        <h1>테트리스 게임</h1>
+    </div>
     <div class="wrapper"> <!--모든것을 감싸는 wrapper 테그-->
         <div class="game-text">
             <span>게임종료</span>
             <button>다시시작</button>
         </div>
-        <div class="score">0</div>
+        <div class="score">점수 : 0</div>
         <div class="playground">
             <ul></ul>
         </div>
+        <br></br>
+        <div class="stage" >1단계</div>
     </div>
     <script src="js/tetris.js" type="module"></script> 
     <!-- type을 모듈로 해야 외부에서 js을 임포트해도 에러가 발생하지 않음 -->

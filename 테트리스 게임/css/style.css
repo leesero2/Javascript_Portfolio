@@ -14,8 +14,15 @@ body{
 
 .score{
     text-align: center;
-    font-size: 36px;
+    font-size: 26px;
     margin-bottom: 2rem;
+}
+
+.header{
+    width: 100%;
+    background-color: #3b5999;
+    text-align: center;
+    padding: 1rem;
 }
 
 .game-text{
@@ -41,10 +48,15 @@ body{
     cursor: pointer;
 }
 
+.stage{
+    text-align: center;
+    font-size: large;
+}
+
 .playground > ul {
     border: 1px solid #333;
     width: 250px;
-    margin: 0 auto;
+    margin: 0 auto; /*가운대로 오게함 */
 }
 
 .playground > ul > li {
@@ -62,6 +74,7 @@ body{
     outline: 1px solid #ccc;
 }
 
+/* 블럭디자인 */
 .tree {
     background: red
 }
