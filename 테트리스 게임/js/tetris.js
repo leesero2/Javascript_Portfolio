@@ -70,16 +70,16 @@ function renderBlocks(moveType = ""){
         const target = playground.childNodes[y] ? playground.childNodes[y].childNodes[0].childNodes[x] : null; 
         //playground.childNodes[y] 가 있으면 playground.childNodes[y].childNodes[0].childNodes[x] 이값을 target에 저장하고
         //없으면 null값을 저장
-        const isAvailable = checkEmpty(target);//checkEmpty는 값의 유무를 확인함
+        const isAvailable = checkEmpty(target);//checkEmpty는 값의 유무를 확인하는 함수
         if(isAvailable){ //사용가능한 상황이라면
             target.classList.add(type, "moving") 
         }else{
-            tempMovingItem = {...movingItem }
+            tempMovingItem = {...movingItem } //tempMovingItemr값을 원상복귀(초기화)
             if(moveType === 'retry'){
                 clearInterval(downInterval)
                 ShowGameOver()
             }
-            setTimeout(() =>{
+            setTimeout(() =>{ 
                 renderBlocks('retry')
                 if(moveType === "top"){
                     seizeBlock();
@@ -90,7 +90,8 @@ function renderBlocks(moveType = ""){
             return true;
         }
     })
-    movingItem.left = left;
+    //movingItem 위치를 수정 (위의 조건을 다 만족하고 이제 위치를 잡아줌)
+    movingItem.left = left; 
     movingItem.top = top;
     movingItem.direction = direction;
 }
@@ -159,10 +160,10 @@ function generateNewBlock(){
 }
 
 function checkEmpty(target){
-    if(!target || target.classList.contains("seized")){
-        return false;
+    if(!target || target.classList.contains("seized")){ //target이 없거나 클래스 요소에 seized가 포함되어있지 않다면
+        return false; //false 값을 리턴
     }
-    return true;
+    return true; //조건을 만족하지 않으면 true값 리턴
 }
 
 function changeDirection(){ //도형 회전 함수
