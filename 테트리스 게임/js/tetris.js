@@ -1,6 +1,5 @@
 import BLOCKS from "./block.js" //block.js 부분을 import 소스
 
-
 const playground = document.querySelector(".playground > ul");
 const gameText = document.querySelector(".game-text");
 const scoreDisplay = document.querySelector(".score");
@@ -15,11 +14,11 @@ const GAME_COLS = 10;
 let score = 0;
 let duration = 500;
 let downInterval;
-let tempMovingItem;
+let tempMovingItem; //movingItem 을 실행하기전 잠깐 담아둘 변수
 let stage = 1;
 
-const movingItem = { 
-    type: "tree",
+const movingItem = { //실질적으로 블럭의 타입, 좌표등의 정보를 담을 변수
+    type: "tree", 
     direction: 3, //방향키를 눌렀을때 좌우로 돌리는 역할을 하는 변수
     top: 0, //좌표기준으로 어디까지 내려가야하는지 나타내줄 변수
     left: 0, //좌표 기준으로 좌우 기준을 나타내줄 변수
@@ -31,21 +30,21 @@ init()
 function init() {
     tempMovingItem = { ...movingItem }; // {... } : 스프레드 오퍼레이터 -  이걸 하면 movingItem안의 값만 대입을 시킴 (값을 복사한다 라고 생각하면 됨)
     for(let i = 0; i < GAME_ROWS; i++){ //세로부분 크기를 결정 
-        prependNewLine()
+        prependNewLine() //prependNewLine()함수를 20번 반복
     }
     generateNewBlock() //블럭을 랜더
 }
 
 //테트리스 칸을 만드는 함수
 function prependNewLine(){
-    const li = document.createElement("li");
-    const ul = document.createElement("ul");
-    for(let j = 0; j < 10; j++){ //가로 크기를 결정
-        const matrix = document.createElement("li");
-        ul.prepend(matrix);
+    const li = document.createElement("li"); //li 속성 지정
+    const ul = document.createElement("ul"); //ul 속성 지정
+    for(let j = 0; j < GAME_COLS; j++){ //가로 크기를 결정
+        const matrix = document.createElement("li"); //하나의 사각형칸을 matrix라고 변수 지정, 속성은 li로 지정
+        ul.prepend(matrix); //위에 ul 속성을 지정한 ul 상수에 prepend 메서드를통해 matrix 변수에 붙임 (이걸 총 10번 반복)
     }
-    li.prepend(ul)
-    playground.prepend(li)
+    li.prepend(ul) //li에 담음
+    playground.prepend(li) //li를 playground에 prepend 시켜주면 됨
 }
 
 //단계 증가 함수
@@ -197,13 +196,14 @@ document.addEventListener("keydown", e=>{
         case 40:
             moveBlock("top", 1);
             break;
-        default:
-            break;
+        
         case 38:
             changeDirection();
             break;
         case 32:
             dropBlock();
+            break;
+        default:
             break;
     }
     console.log(e)
@@ -215,3 +215,5 @@ restartButton.addEventListener("click",()=>{
     playground.innerHTML = "";
     init()
 })
+
+//멀티플레이 및 아래 굳는거 표현하기
