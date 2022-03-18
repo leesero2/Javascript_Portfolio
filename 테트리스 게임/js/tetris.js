@@ -7,8 +7,8 @@ const restartButton = document.querySelector(".game-text > button");
 const stageLV = document.querySelector(".stage");
 
 //Setting
-const GAME_ROWS = 20;
-const GAME_COLS = 10;
+const GAME_ROWS = 20; //세로
+const GAME_COLS = 10; //가로
 
 //변수
 let score = 0;
@@ -57,21 +57,23 @@ function stageUP(){
 
 //블럭을 렌더링 하는 함수
 function renderBlocks(moveType = ""){
-    const {type, direction, top, left} = tempMovingItem; //이렇게 { } 로 묶는게 편함
+    const {type, direction, top, left} = tempMovingItem; //tempMovingItem에 있는 각각의 프로퍼티들을 변수로 사용
     const movingBlocks = document.querySelectorAll(".moving"); //도형을 움직일때 그전위 위치를 지우기위한 소스 / 무빙 클래스를 가진 모든 요소들을 불러옴
     movingBlocks.forEach(moving =>{ 
         moving.classList.remove(type,"moving"); //움직일때 type 과 무빙 클래스를 지움 (이전의 위치를 지움)
     })
     BLOCKS[type][direction].some(block => { //type은 블록모양, direction은 좌표값 (모양) 을 접근함
+        //direction 배열 위치가 0번이면 가장 기본적인 모양, 1번이면 한번 회전한 모양 이렇게 지정이됨
+        //2차원 배열이라 []첫번재는 도형의 모양을 뜻함
         const x = block[0] + left; //x좌표를 left에 더해서 값이 대입됨 (좌우로 움직이게함)
-        const y = block[1] + top; //y좌표를 top에 더해서 값이 대입됨 (아래로 떨어지게함)
+        const y = block[1] + top;  //y좌표를 top에 더해서 값이 대입됨 (아래로 떨어지게함)
         //삼항연산자 - 조건 ? 참일경우 : 거짓일경우
         const target = playground.childNodes[y] ? playground.childNodes[y].childNodes[0].childNodes[x] : null; 
         //playground.childNodes[y] 가 있으면 playground.childNodes[y].childNodes[0].childNodes[x] 이값을 target에 저장하고
         //없으면 null값을 저장
         const isAvailable = checkEmpty(target);//checkEmpty는 값의 유무를 확인하는 함수
         if(isAvailable){ //사용가능한 상황이라면
-            target.classList.add(type, "moving") 
+            target.classList.add(type, "moving") //classList에 type을 추가
         }else{
             tempMovingItem = {...movingItem } //tempMovingItemr값을 원상복귀(초기화)
             if(moveType === 'retry'){
