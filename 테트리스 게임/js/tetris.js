@@ -65,10 +65,14 @@ function renderBlocks(moveType = ""){
     BLOCKS[type][direction].some(block => { //type은 블록모양, direction은 좌표값 (모양) 을 접근함
         //direction 배열 위치가 0번이면 가장 기본적인 모양, 1번이면 한번 회전한 모양 이렇게 지정이됨
         //2차원 배열이라 []첫번재는 도형의 모양을 뜻함
-        const x = block[0] + left; //x좌표를 left에 더해서 값이 대입됨 (좌우로 움직이게함)
+        const x = block[0] + left; //x좌표를 left에 더해서 값이 대입됨 (좌우로 움직이게함) 
         const y = block[1] + top;  //y좌표를 top에 더해서 값이 대입됨 (아래로 떨어지게함)
+        //여기서 x의 값은 0번 type에 [0,0]중 첫번째 값을 의미하기에 [0]임, 두번째 자리 값은 y값을 의미하기에 [1]을 지정
+
+
         //삼항연산자 - 조건 ? 참일경우 : 거짓일경우
-        const target = playground.childNodes[y] ? playground.childNodes[y].childNodes[0].childNodes[x] : null; 
+        const target = playground.childNodes[y] ? playground.childNodes[y].childNodes[0].childNodes[x] : null;
+        //childNodes[y]는 높이를 의미함 그래서 0:li 라고 뜨기에 0번을 택함, y안에 들어있는 childNodes의 0번이 ul이 됨, 그 ul안에 또 childNodes가 있는데 그게 x값임
         //playground.childNodes[y] 가 있으면 playground.childNodes[y].childNodes[0].childNodes[x] 이값을 target에 저장하고
         //없으면 null값을 저장
         const isAvailable = checkEmpty(target);//checkEmpty는 값의 유무를 확인하는 함수
