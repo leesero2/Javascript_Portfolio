@@ -133,8 +133,8 @@ function checkMatch(){ //같은줄을 지우는 함수
                 matched = false;
             }
         })
-        if(matched){
-            child.remove();
+        if(matched){ //matched가 참이라면
+            child.remove(); //child를 지움
             prependNewLine()
             score++;
             scoreDisplay.innerHTML = "점수 : "+ score ;
@@ -231,3 +231,4 @@ restartButton.addEventListener("click",()=>{
 })
 
 //멀티플레이 및 아래 굳는거 표현하기
+//
