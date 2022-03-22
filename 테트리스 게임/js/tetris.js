@@ -12,7 +12,7 @@ const GAME_COLS = 10; //가로
 
 //변수
 let score = 0;
-let duration = 500;
+let duration = 500; //속도 변수
 let downInterval;
 let tempMovingItem; //movingItem 을 실행하기전 잠깐 담아둘 변수
 let stage = 1;
@@ -28,6 +28,9 @@ const movingItem = { //실질적으로 블럭의 타입, 좌표등의 정보를 
 init()
 
 function init() {
+    // duration = 500; //속도 초기화
+    // stage = 1; //단계 초기화
+    // score = 0;
     tempMovingItem = { ...movingItem }; // {... } : 스프레드 오퍼레이터 -  이걸 하면 movingItem안의 값만 대입을 시킴 (값을 복사한다 라고 생각하면 됨)
     for(let i = 0; i < GAME_ROWS; i++){ //세로부분 크기를 결정 
         prependNewLine() //prependNewLine()함수를 20번 반복
@@ -51,7 +54,10 @@ function prependNewLine(){
 function stageUP(){
     stage++;
     alert(stage+"단계 시작")
-    stageLV.innerHTML = stage + "단계"
+    stageLV.innerHTML = stage + "단계";
+    duration -= 100; //속도를 증가
+    console.log(duration);
+    
 }
 
 
@@ -154,12 +160,12 @@ function checkMatch(){ //같은줄을 지우는 함수
 function generateNewBlock(){
     clearInterval(downInterval);
     downInterval = setInterval(()=>{
-        moveBlock('top',1)
+        moveBlock('top',1) //top으로 1씩 블럭을 움직임
     },duration)
     const blockArray = Object.entries(BLOCKS);
     const randomIndex = Math.floor(Math.random() * blockArray.length)
     
-    movingItem.type = blockArray[randomIndex][0]
+    movingItem.type = blockArray[randomIndex][0] //생성될 블럭을 랜덤으로 출력
     movingItem.top = 0; //0번에서 나옴 (3으로 하면 3칸 아래서 생성됨)
     movingItem.left = 3; //새로 생성된 블록이 left에서 3칸 이동된 좌표로 나옴
     movingItem.direction = 0;
@@ -214,7 +220,7 @@ document.addEventListener("keydown", e=>{ //keydown 이벤트가 벌어질때, �
         default:
             break;
     }
-    console.log(e)
+    //console.log(e)
 })
 
 //다시시작 버튼 이벤트 클리너
