@@ -58,24 +58,27 @@ function stageUP(){
 //블럭을 렌더링 하는 함수
 function renderBlocks(moveType = ""){
     const {type, direction, top, left} = tempMovingItem; //tempMovingItem에 있는 각각의 프로퍼티들을 변수로 사용
+
     const movingBlocks = document.querySelectorAll(".moving"); //도형을 움직일때 그전위 위치를 지우기위한 소스 / 무빙 클래스를 가진 모든 요소들을 불러옴
     movingBlocks.forEach(moving =>{ 
         moving.classList.remove(type,"moving"); //움직일때 type 과 무빙 클래스를 지움 (이전의 위치를 지움)
     })
+
     BLOCKS[type][direction].some(block => { //type은 블록모양, direction은 좌표값 (모양) 을 접근함
         //direction 배열 위치가 0번이면 가장 기본적인 모양, 1번이면 한번 회전한 모양 이렇게 지정이됨
         //2차원 배열이라 []첫번재는 도형의 모양을 뜻함
         const x = block[0] + left; //x좌표를 left에 더해서 값이 대입됨 (좌우로 움직이게함) 
         const y = block[1] + top;  //y좌표를 top에 더해서 값이 대입됨 (아래로 떨어지게함)
         //여기서 x의 값은 0번 type에 [0,0]중 첫번째 값을 의미하기에 [0]임, 두번째 자리 값은 y값을 의미하기에 [1]을 지정
-
-
         //삼항연산자 - 조건 ? 참일경우 : 거짓일경우
         const target = playground.childNodes[y] ? playground.childNodes[y].childNodes[0].childNodes[x] : null;
-        //childNodes[y]는 높이를 의미함 그래서 0:li 라고 뜨기에 0번을 택함, y안에 들어있는 childNodes의 0번이 ul이 됨, 그 ul안에 또 childNodes가 있는데 그게 x값임
+        //childNodes[y]는 높이를 의미함 그래서 0:li 라고 뜨기에 0번을 택함, y안에 들어있는 childNodes의 0번이 ul이 됨, 그 ul안에 또 childNodes가 있는데 그게 x값임 (이해가 안되면 23분부터)
         //playground.childNodes[y] 가 있으면 playground.childNodes[y].childNodes[0].childNodes[x] 이값을 target에 저장하고
         //없으면 null값을 저장
-        const isAvailable = checkEmpty(target);//checkEmpty는 값의 유무를 확인하는 함수
+
+        //console.log(target); some 반복문으로 돌렸기 때문에 type이 tree인 도형의 모양 좌표가 console로 출력됨
+
+        const isAvailable = checkEmpty(target);//checkEmpty는 값의 유무를 확인하는 함수, target을 인자로 넘김
         if(isAvailable){ //사용가능한 상황이라면
             target.classList.add(type, "moving") //classList에 type을 추가
         }else{
@@ -104,8 +107,8 @@ function renderBlocks(moveType = ""){
 function seizeBlock(){ //고정시키는 함수
     const movingBlocks = document.querySelectorAll(".moving");
     movingBlocks.forEach(moving =>{
-        moving.classList.remove("moving");
-        moving.classList.add("seized");
+        moving.classList.remove("moving"); //움직임을 지우고
+        moving.classList.add("seized"); //고정을 추가
     })
     checkMatch()
     //generateNewBlock()
@@ -157,8 +160,8 @@ function generateNewBlock(){
     const randomIndex = Math.floor(Math.random() * blockArray.length)
     
     movingItem.type = blockArray[randomIndex][0]
-    movingItem.top = 0;
-    movingItem.left = 3;
+    movingItem.top = 0; //0번에서 나옴 (3으로 하면 3칸 아래서 생성됨)
+    movingItem.left = 3; //새로 생성된 블록이 left에서 3칸 이동된 좌표로 나옴
     movingItem.direction = 0;
     tempMovingItem = {...movingItem};
     renderBlocks()
@@ -191,7 +194,7 @@ function dropBlock(){ //스페이스바 함수
 }
 
 //이벤트 핸들링 
-document.addEventListener("keydown", e=>{
+document.addEventListener("keydown", e=>{ //keydown 이벤트가 벌어질때, 이벤트 객체를 인자로 넘겨받음
     switch(e.keyCode){
         case 39:
             moveBlock("left",1);
@@ -202,7 +205,6 @@ document.addEventListener("keydown", e=>{
         case 40:
             moveBlock("top", 1);
             break;
-        
         case 38:
             changeDirection();
             break;
