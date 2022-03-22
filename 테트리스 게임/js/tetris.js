@@ -227,7 +227,7 @@ document.addEventListener("keydown", e=>{ //keydown 이벤트가 벌어질때, �
 restartButton.addEventListener("click",()=>{
     gameText.style.display = "none";
     playground.innerHTML = "";
-    init()
+    location.reload() //새로고침
 })
 
 //멀티플레이 및 아래 굳는거 표현하기
