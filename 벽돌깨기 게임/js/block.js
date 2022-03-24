@@ -34,35 +34,37 @@ document.addEventListener("keydown", keyDown, false);
 document.addEventListener("keyup", keyUp, false);
 
 function keyDown(e) {
-     if(e.key == "ArrowRight") {
-        rPressed = true;
+     if(e.key == "ArrowRight") {//눌러졌다면
+        rPressed = true; //true로 변경
     }
-    else if(e.key == "ArrowLeft") {
-        lPressed = true;
+    else if(e.key == "ArrowLeft") {//눌러졌다면
+        lPressed = true; //true로 변경
     }
 }
 
+//키 해제 함수
 function keyUp(e) {
-    if(e.key == "ArrowRight") {
-        rPressed = false;
+    if(e.key == "ArrowRight") {//눌러졌다면
+        rPressed = false; //false로 변경
     }
-    else if( e.key == "ArrowLeft") {
-        lPressed = false;
+    else if( e.key == "ArrowLeft") {//눌러졌다면
+        lPressed = false; //false로 변경
     }
 }
 
+//패달 충돌 처리 함수
 function colCheck() {
    for (var c = 0; c < bc; c++) {
       for (var r = 0; r < br; r++) {
            var b = bricks[c][r];
-           if (b.status == 1) {
+           if (b.status == 1) { //status 변수가 1에서 0으로 바뀔때 공도 방향을 바꿈
               if (x > b.x && x < b.x + bw && y > b.y && y <b.y + bh) {
-                 dy = -dy;
-                 b.status = 0;
-                 score++;
-                 if(score == br*bc) {
-                   alert("미션 성공!, 축하합니다^^");
-                   document.location.reload();                      
+                 dy = -dy; //방향 전환
+                 b.status = 0; //status를 0으로
+                 score++; //점수증가
+                 if(score == br*bc) { //점수랑 블럭의 갯수랑 같다면
+                   alert("미션 성공!, 축하합니다^^"); 
+                   document.location.reload(); //새로고침                     
                }
            }
        }
@@ -92,7 +94,8 @@ function drawPaddle() {
 function drawBricks() {
     for(var c=0; c<bc; c++) {
       for(var r=0; r<br; r++) {
-        if(bricks[c][r].status == 1) {
+        if(bricks[c][r].status == 1) { //status변수는 0이되면 화면에서 사라지게 하기위해 생성
+            //
           var bx = (c*(bw+bp))+bLeft;
           var by = (r*(bh+bp))+bTop;
           bricks[c][r].x = bx;
