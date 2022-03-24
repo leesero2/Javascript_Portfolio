@@ -1,0 +1,18 @@
+canvas {
+    background: #eee;
+    margin: 5px;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    width: 100%;
+    background-color: #3b5999;
+    text-align: center;
+    padding: 1rem;
+}
