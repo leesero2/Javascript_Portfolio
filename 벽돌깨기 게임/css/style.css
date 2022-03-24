@@ -6,6 +6,8 @@
 canvas {
     background: #eee;
     margin-top: 50px;
+    /* width:500px;
+    height:450; */
 }
 
 body{
@@ -21,4 +23,3 @@ body{
     text-align: center;
     padding: 1rem;
 }
-

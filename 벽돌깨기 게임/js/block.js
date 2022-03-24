@@ -1,9 +1,10 @@
+//변수
 var canvas = document.getElementsByTagName("canvas")[0];
 var ctx = canvas.getContext("2d");
 var ballSize= 10;
 var x = canvas.width/2;
 var y = canvas.height-30;
-var dx = 2;
+var dx = 2; 
 var dy = -2;
 var pHeight = 15;
 var pWidth = 80;
@@ -19,6 +20,7 @@ var bTop = 30;
 var bLeft = 30;
 var score = 0;
 
+//블럭변수
 var bricks = [];
 for(var c=0; c<bc; c++) {
     bricks[c] = [];
@@ -27,11 +29,11 @@ for(var c=0; c<bc; c++) {
     }
 }
 
+//이벤트 리스너
 document.addEventListener("keydown", keyDown, false);
 document.addEventListener("keyup", keyUp, false);
 
 function keyDown(e) {
-
      if(e.key == "ArrowRight") {
         rPressed = true;
     }
@@ -67,7 +69,8 @@ function colCheck() {
     }
   }
 }
-   
+
+//볼을 나타내는 함수
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballSize, 0, Math.PI*2);
@@ -75,6 +78,8 @@ function drawBall() {
     ctx.fill();
     ctx.closePath();
 }
+
+//패달을 나타내는 함수
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(px, canvas.height-pHeight, pWidth, pHeight);
@@ -107,40 +112,41 @@ function drawScore() {
    ctx.fillText("점수: "+score*10, 10, 20);
 }
 
+//업테이트 함수
 function update() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height); //화면지우기
     drawBricks();
-    drawBall();
-    drawPaddle();
+    drawBall(); //공 생성
+    drawPaddle(); //패달 생성
     colCheck();
     drawScore();
     
-    if(x + dx > canvas.width-ballSize || x + dx < ballSize) {
-        dx = -dx;
+    if(x + dx > canvas.width-ballSize || x + dx < ballSize) { //오른쪽 벽이나 왼쪽 벽에 부딪치면
+        dx = -dx; //방향 전환
     }
     if(y + dy < ballSize) {
         dy = -dy;
     }
-    else if(y + dy > canvas.height-ballSize) {
+    else if(y + dy > canvas.height-ballSize) { //위쪽 벽이나  아래쪽 벽에 부딪치면
         if(x > px && x < px + pWidth) {
-                dy = -dy;
+                dy = -dy; //방향전환
         }
         else {
-            //alert("게임 종료");
-            //document.location.reload(); 
-            clearInterval(interval);
+            // alert("게임 종료");
+            // document.location.reload(); 
+            // clearInterval(interval);
         }
     }
     
     if(rPressed && px < canvas.width-pWidth) {
-        px += 7;
+        px += 7; //오른쪽으로 7 만큼 이동
     }
     else if(lPressed && px >0) {
-        px -= 7;
+        px -= 7; //왼쪽으로 7만큼 이동
     }
-    
-    x += dx;
-    y += dy;
+    //dx, dy가 2로 설정되어 있기때문에 인터벌인 10밀리세컨드당 대각선으로 움직임
+    x += dx; //x좌표 변경
+    y += dy; //y좌표 변경
 }
 
-var interval = setInterval(update, 10);
+var interval = setInterval(update, 10); //10밀리세컨드마다 update 함수를 실행
