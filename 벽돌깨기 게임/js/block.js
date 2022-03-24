@@ -11,14 +11,14 @@ var pWidth = 80;
 var px = (canvas.width-pWidth)/2;
 var rPressed = false;
 var lPressed = false;
-var br = 3;
-var bc = 5;
-var bw = 75;
-var bh = 20;
-var bp = 10;
-var bTop = 30;
-var bLeft = 30;
-var score = 0;
+var br = 3; //줄
+var bc = 5; //열
+var bw = 75; //넓이
+var bh = 20; //높이
+var bp = 10; //사이간격
+var bTop = 30; //상단간격
+var bLeft = 30; //왼쪽 간격
+var score = 0; //점수
 
 //블럭변수
 var bricks = [];
@@ -70,7 +70,7 @@ function colCheck() {
   }
 }
 
-//볼을 나타내는 함수
+//볼을 생성하는 함수
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballSize, 0, Math.PI*2);
@@ -79,7 +79,7 @@ function drawBall() {
     ctx.closePath();
 }
 
-//패달을 나타내는 함수
+//패달을 생성하는 함수
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(px, canvas.height-pHeight, pWidth, pHeight);
@@ -88,6 +88,7 @@ function drawPaddle() {
     ctx.closePath();
 }
 
+//블럭을 생성하는 함수
 function drawBricks() {
     for(var c=0; c<bc; c++) {
       for(var r=0; r<br; r++) {
@@ -124,17 +125,17 @@ function update() {
     if(x + dx > canvas.width-ballSize || x + dx < ballSize) { //오른쪽 벽이나 왼쪽 벽에 부딪치면
         dx = -dx; //방향 전환
     }
-    if(y + dy < ballSize) {
-        dy = -dy;
+    if(y + dy < ballSize) { //상단벽일 경우 방향을 바꿈
+        dy = -dy; //방향 전환
     }
     else if(y + dy > canvas.height-ballSize) { //위쪽 벽이나  아래쪽 벽에 부딪치면
-        if(x > px && x < px + pWidth) {
+        if(x > px && x < px + pWidth) { //패들안에 들어가면
                 dy = -dy; //방향전환
         }
         else {
-            // alert("게임 종료");
-            // document.location.reload(); 
-            // clearInterval(interval);
+            alert("게임 종료");
+            document.location.reload(); //새로고침
+            clearInterval(interval); //진행중인 interval을 없애줌
         }
     }
     
