@@ -30,9 +30,11 @@ for(var c=0; c<bc; c++) {
 }
 
 //이벤트 리스너
-document.addEventListener("keydown", keyDown, false);
-document.addEventListener("keyup", keyUp, false);
+//addEventListener(이벤트, 함수명)
+document.addEventListener("keydown", keyDown);
+document.addEventListener("keyup", keyUp);
 
+//키 눌림 함수
 function keyDown(e) {
      if(e.key == "ArrowRight") {//눌러졌다면
         rPressed = true; //true로 변경
@@ -95,7 +97,6 @@ function drawBricks() {
     for(var c=0; c<bc; c++) {
       for(var r=0; r<br; r++) {
         if(bricks[c][r].status == 1) { //status변수는 0이되면 화면에서 사라지게 하기위해 생성
-            //
           var bx = (c*(bw+bp))+bLeft;
           var by = (r*(bh+bp))+bTop;
           bricks[c][r].x = bx;
@@ -110,6 +111,7 @@ function drawBricks() {
   }
 }
 
+//점수 함수
 function drawScore() {
    ctx.font = "20px 고딕";
    ctx.fillStyle = "green";

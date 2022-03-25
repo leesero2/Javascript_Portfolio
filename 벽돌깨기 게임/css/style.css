@@ -6,8 +6,6 @@
 canvas {
     background: #eee;
     margin-top: 50px;
-    /* width:500px;
-    height:450; */
 }
 
 body{
@@ -21,5 +19,12 @@ body{
     width: 100%;
     background-color: #3b5999;
     text-align: center;
-    padding: 1rem;
+    padding: 1rem; 
+}
+
+.method{
+    text-align: center;
+    margin: 30px;
+    background-color: beige;
+    padding: 1rem; 
 }
