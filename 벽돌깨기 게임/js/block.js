@@ -1,16 +1,16 @@
 //변수
 var canvas = document.getElementsByTagName("canvas")[0];
-
 var ctx = canvas.getContext("2d");
-var ctx1 = canvas.getContext("2d");
-var ballSize= 10;
-var x = canvas.width/2;
-var y = canvas.height-30;
+//var ctx1 = canvas.getContext("2d");
+var ballSize= 10; //볼 크기
+
+var x = canvas.width/2; //이거 건드니까 공 움직임이 이상해짐, 분석필요
+var y = canvas.height-30;//공의 각도인거같음 이것도 분석 필요
 var dx = 2; 
 var dy = -2;
-var pHeight = 15;
-var pWidth = 80;
-var px = (canvas.width-pWidth)/2;
+var pHeight = 15; //패들 높이
+var pWidth = 80; //패들 넓이
+var px = (canvas.width-pWidth)/2; //패들좌표 변수,좌표는 (화면 - 패들높이)/2를 사용
 
 var rPressed = false;
 var lPressed = false;
@@ -80,21 +80,25 @@ function colCheck() {
 
 //볼을 생성하는 함수
 function drawBall() {
-    ctx.beginPath();
-    ctx1.arc(y, x, ballSize, 0, Math.PI*2)
-    ctx.arc(x, y, ballSize, 0, Math.PI*2);
+    ctx.beginPath(); //beginPath() : 도형을 그리기전에 꼭 먼저 선언
+    //ctx1.arc(y, x, ballSize, 0, Math.PI*2)
+    ctx.arc(x, y, ballSize, 0, Math.PI*2) //원을 그리려면 arc를 사용해야함
+    //주의 : 호나 원을 그리기위해서는 arc() 혹은 arcTo() 메소드를 사용
+    //예시 - arc(x, y, radius, startAngle, endAngle, anticlockwise)
+    //(x, y) 위치에 원점을 두면서, 반지름 r을 가지고,  startAngle 에서 시작하여 endAngle 에서 끝나며 주어진 anticlockwise 방향으로 향하는 (기본값은 시계방향 회전) 호를 그리게 됨.
+
     ctx.fillStyle = "orange";
     ctx.fill();
-    ctx.closePath();
+    ctx.closePath(); //closePath() : 다 그렸으면 마지막에 꼭 선언
 }
 
 //패달을 생성하는 함수
 function drawPaddle() {
-    ctx.beginPath();
-    ctx.rect(px, canvas.height-pHeight, pWidth, pHeight);
+    ctx.beginPath(); //beginPath() : 도형을 그리기전에 꼭 먼저 선언
+    ctx.rect(px, canvas.height-pHeight, pWidth, pHeight); //rect로 패들을 그림
     ctx.fillStyle = "blue";
     ctx.fill();
-    ctx.closePath();
+    ctx.closePath(); //closePath() : 다 그렸으면 마지막에 꼭 선언
 }
 
 //블럭을 생성하는 함수
@@ -155,7 +159,7 @@ function update() {
         }
     }
     
-    if(rPressed && px < canvas.width-pWidth) {
+    if(rPressed && px < canvas.width-pWidth) { //(화면 - 패들넓이)/2
         px += 7; //오른쪽으로 7 만큼 이동
     }
     else if(lPressed && px >0) {
