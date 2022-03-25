@@ -1,6 +1,8 @@
 //변수
 var canvas = document.getElementsByTagName("canvas")[0];
+
 var ctx = canvas.getContext("2d");
+var ctx1 = canvas.getContext("2d");
 var ballSize= 10;
 var x = canvas.width/2;
 var y = canvas.height-30;
@@ -9,8 +11,10 @@ var dy = -2;
 var pHeight = 15;
 var pWidth = 80;
 var px = (canvas.width-pWidth)/2;
+
 var rPressed = false;
 var lPressed = false;
+
 var br = 3; //줄
 var bc = 5; //열
 var bw = 75; //넓이
@@ -77,6 +81,7 @@ function colCheck() {
 //볼을 생성하는 함수
 function drawBall() {
     ctx.beginPath();
+    ctx1.arc(y, x, ballSize, 0, Math.PI*2)
     ctx.arc(x, y, ballSize, 0, Math.PI*2);
     ctx.fillStyle = "orange";
     ctx.fill();
@@ -117,6 +122,12 @@ function drawScore() {
    ctx.fillStyle = "green";
    ctx.fillText("점수: "+score*10, 10, 20);
 }
+
+//공이 두개가 되는 함수
+function twoball(){
+
+}
+
 
 //업테이트 함수
 function update() {
