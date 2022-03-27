@@ -1,38 +1,37 @@
 //변수
-var canvas = document.getElementsByTagName("canvas")[0];
-var ctx = canvas.getContext("2d");
-//var ctx1 = canvas.getContext("2d");
-var ballSize= 10; //볼 크기
+let canvas = document.getElementsByTagName("canvas")[0];
+let ctx = canvas.getContext("2d");
+let ballSize= 10; //볼 크기
 
-var x = canvas.width/2;  //공의 x(가로) 좌표
-var y = canvas.height-30;//공의 y(세로) 좌표
+let x = canvas.width/2;  //공의 x(가로) 좌표
+let y = canvas.height-30;//공의 y(세로) 좌표
 
 let x2 = canvas.width/2; //공의 x(가로) 좌표
 let y2 = canvas.height-120; //공의 y(세로) 좌표
 
-var dx = 2; 
-var dy = -2;
-var pHeight = 15; //패들 높이
-var pWidth = 80; //패들 넓이
-var px = (canvas.width-pWidth)/2; //패들좌표 변수,좌표는 (화면 - 패들높이)/2를 사용
+let dx = 2; 
+let dy = -2;
+let pHeight = 15; //패들 높이
+let pWidth = 80; //패들 넓이
+let px = (canvas.width-pWidth)/2; //패들좌표 변수,좌표는 (화면 - 패들높이)/2를 사용
 
-var rPressed = false;
-var lPressed = false;
+let rPressed = false;
+let lPressed = false;
 
-var br = 3; //줄
-var bc = 5; //열
-var bw = 75; //넓이
-var bh = 20; //높이
-var bp = 10; //사이간격
-var bTop = 30; //상단간격
-var bLeft = 30; //왼쪽 간격
-var score = 0; //점수
+let br = 3; //줄
+let bc = 5; //열
+let bw = 75; //넓이
+let bh = 20; //높이
+let bp = 10; //사이간격
+let bTop = 30; //상단간격
+let bLeft = 30; //왼쪽 간격
+let score = 0; //점수
 
 //블럭변수
-var bricks = [];
-for(var c=0; c<bc; c++) {
+let bricks = [];
+for(let c=0; c<bc; c++) {
     bricks[c] = [];
-    for (var r = 0; r<br; r++) {
+    for (let r = 0; r<br; r++) {
        bricks[c][r] = { x: 0, y: 0, status: 1 };
     }
 }
@@ -64,9 +63,9 @@ function keyUp(e) {
 
 //패달 충돌 처리 함수
 function colCheck() {
-   for (var c = 0; c < bc; c++) {
-      for (var r = 0; r < br; r++) {
-           var b = bricks[c][r];
+   for (let c = 0; c < bc; c++) {
+      for (let r = 0; r < br; r++) {
+           let b = bricks[c][r];
            if (b.status == 1) { //status 변수가 1에서 0으로 바뀔때 공도 방향을 바꿈
               if (x > b.x && x < b.x + bw && y > b.y && y <b.y + bh) {
                  dy = -dy; //방향 전환
@@ -107,11 +106,11 @@ function drawPaddle() {
 
 //블럭을 생성하는 함수
 function drawBricks() {
-    for(var c=0; c<bc; c++) {
-      for(var r=0; r<br; r++) {
+    for(let c=0; c<bc; c++) {
+      for(let r=0; r<br; r++) {
         if(bricks[c][r].status == 1) { //status변수는 0이되면 화면에서 사라지게 하기위해 생성
-          var bx = (c*(bw+bp))+bLeft;
-          var by = (r*(bh+bp))+bTop;
+          let bx = (c*(bw+bp))+bLeft;
+          let by = (r*(bh+bp))+bTop;
           bricks[c][r].x = bx;
           bricks[c][r].y = by;
           
@@ -125,7 +124,7 @@ function drawBricks() {
   }
 }
 
-//볼을 생성하는 함수
+//볼을 여러개 생성하는 함수
 function drawBall2() {
     ctx.beginPath(); //beginPath() : 도형을 그리기전에 꼭 먼저 선언
     //ctx1.arc(y, x, ballSize, 0, Math.PI*2)
@@ -188,4 +187,4 @@ function update() {
     y += dy; //y좌표 변경
 }
 
-var interval = setInterval(update, 10); //10밀리세컨드마다 update 함수를 실행
+let interval = setInterval(update, 10); //10밀리세컨드마다 update 함수를 실행
