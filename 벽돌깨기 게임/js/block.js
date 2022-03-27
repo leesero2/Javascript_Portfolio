@@ -122,7 +122,7 @@ function drawBall2() {
                 dy = -dy; //방향전환
         }
         else{
-            //함수를 지우는 소스를 넣어야함(공부중)
+            //함수를 지우는 소스
         }
     }
     
@@ -196,7 +196,7 @@ function update() {
     if(x2 + dx2 > canvas.width-ballSize || x2 + dx2 < ballSize) { //오른쪽 벽이나 왼쪽 벽에 부딪치면
         dx2 = -dx2; //방향 전환
     }
-    
+
     else if(y + dy > canvas.height-ballSize) { //위쪽 벽이나  아래쪽 벽에 부딪치면
         if(x > px && x < px + pWidth) { //패들안에 들어가면 + && x2 > px && x2 < px + pWidth 이걸 추가해서 두번째 공 기능도 넣음
                 dy = -dy; //방향전환
@@ -205,10 +205,12 @@ function update() {
             alert("게임 종료");
             document.location.reload(); //새로고침
             clearInterval(interval); //진행중인 interval을 없애줌
-            }
+            
+
         }
     }
 
+    
     
     if(rPressed && px < canvas.width-pWidth) { //(화면 - 패들넓이)/2
         px += 7; //오른쪽으로 7 만큼 이동
