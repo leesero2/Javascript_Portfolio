@@ -4,8 +4,12 @@ var ctx = canvas.getContext("2d");
 //var ctx1 = canvas.getContext("2d");
 var ballSize= 10; //볼 크기
 
-var x = canvas.width/2; //이거 건드니까 공 움직임이 이상해짐, 분석필요
-var y = canvas.height-30;//공의 각도인거같음 이것도 분석 필요
+var x = canvas.width/2;  //공의 x(가로) 좌표
+var y = canvas.height-30;//공의 y(세로) 좌표
+
+let x2 = canvas.width/2; //공의 x(가로) 좌표
+let y2 = canvas.height-120; //공의 y(세로) 좌표
+
 var dx = 2; 
 var dy = -2;
 var pHeight = 15; //패들 높이
@@ -88,7 +92,7 @@ function drawBall() {
     //(x, y) 위치에 원점을 두면서, 반지름 r을 가지고,  startAngle 에서 시작하여 endAngle 에서 끝나며 주어진 anticlockwise 방향으로 향하는 (기본값은 시계방향 회전) 호를 그리게 됨.
 
     ctx.fillStyle = "orange";
-    ctx.fill();
+    ctx.fill(); //경로의 내부를 채워서 내부가 채워진 도형을 그림
     ctx.closePath(); //closePath() : 다 그렸으면 마지막에 꼭 선언
 }
 
@@ -97,7 +101,7 @@ function drawPaddle() {
     ctx.beginPath(); //beginPath() : 도형을 그리기전에 꼭 먼저 선언
     ctx.rect(px, canvas.height-pHeight, pWidth, pHeight); //rect로 패들을 그림
     ctx.fillStyle = "blue";
-    ctx.fill();
+    ctx.fill(); //경로의 내부를 채워서 내부가 채워진 도형을 그림
     ctx.closePath(); //closePath() : 다 그렸으면 마지막에 꼭 선언
 }
 
@@ -110,14 +114,30 @@ function drawBricks() {
           var by = (r*(bh+bp))+bTop;
           bricks[c][r].x = bx;
           bricks[c][r].y = by;
+          
           ctx.beginPath();
           ctx.rect(bx, by, bw, bh);
           ctx.fillStyle = "#DF3A01";
-          ctx.fill();
+          ctx.fill(); //경로의 내부를 채워서 내부가 채워진 도형을 그림
           ctx.closePath();
           }
       }
   }
+}
+
+//볼을 생성하는 함수
+function drawBall2() {
+    ctx.beginPath(); //beginPath() : 도형을 그리기전에 꼭 먼저 선언
+    //ctx1.arc(y, x, ballSize, 0, Math.PI*2)
+    ctx.arc(x2, y2, ballSize, 0, Math.PI*2)
+    ctx.arc(x2, y, ballSize, 0, Math.PI*2) //원을 그리려면 arc를 사용해야함
+    //주의 : 호나 원을 그리기위해서는 arc() 혹은 arcTo() 메소드를 사용
+    //예시 - arc(x, y, radius, startAngle, endAngle, anticlockwise)
+    //(x, y) 위치에 원점을 두면서, 반지름 r을 가지고,  startAngle 에서 시작하여 endAngle 에서 끝나며 주어진 anticlockwise 방향으로 향하는 (기본값은 시계방향 회전) 호를 그리게 됨.
+
+    ctx.fillStyle = "red";
+    ctx.fill(); //경로의 내부를 채워서 내부가 채워진 도형을 그림
+    ctx.closePath(); //closePath() : 다 그렸으면 마지막에 꼭 선언
 }
 
 //점수 함수
@@ -127,10 +147,6 @@ function drawScore() {
    ctx.fillText("점수: "+score*10, 10, 20);
 }
 
-//공이 두개가 되는 함수
-function twoball(){
-
-}
 
 
 //업테이트 함수
@@ -139,7 +155,9 @@ function update() {
     drawBricks();
     drawBall(); //공 생성
     drawPaddle(); //패달 생성
+    drawBall2();
     colCheck();
+    
     drawScore();
     
     if(x + dx > canvas.width-ballSize || x + dx < ballSize) { //오른쪽 벽이나 왼쪽 벽에 부딪치면
