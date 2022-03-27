@@ -7,10 +7,13 @@ let x = canvas.width/2;  //공의 x(가로) 좌표
 let y = canvas.height-30;//공의 y(세로) 좌표
 
 let x2 = canvas.width/2; //공의 x(가로) 좌표
-let y2 = canvas.height-120; //공의 y(세로) 좌표
+let y2 = canvas.height-30; //공의 y(세로) 좌표
 
-let dx = 2; 
-let dy = -2;
+let dx = 2; //2로 설정을 해둬서 대각선으로 움직임
+let dy = -2; //2로 설정을 해둬서 대각선으로 움직임
+
+let dx2 = -1; //2로 설정을 해둬서 대각선으로 움직임
+
 let pHeight = 15; //패들 높이
 let pWidth = 80; //패들 넓이
 let px = (canvas.width-pWidth)/2; //패들좌표 변수,좌표는 (화면 - 패들높이)/2를 사용
@@ -26,6 +29,9 @@ let bp = 10; //사이간격
 let bTop = 30; //상단간격
 let bLeft = 30; //왼쪽 간격
 let score = 0; //점수
+
+let life = 5; //목숨
+
 
 //블럭변수
 let bricks = [];
@@ -81,6 +87,11 @@ function colCheck() {
   }
 }
 
+function lifeC(){
+
+}
+
+
 //볼을 생성하는 함수
 function drawBall() {
     ctx.beginPath(); //beginPath() : 도형을 그리기전에 꼭 먼저 선언
@@ -93,6 +104,28 @@ function drawBall() {
     ctx.fillStyle = "orange";
     ctx.fill(); //경로의 내부를 채워서 내부가 채워진 도형을 그림
     ctx.closePath(); //closePath() : 다 그렸으면 마지막에 꼭 선언
+}
+
+//볼을 여러개 생성하는 함수
+function drawBall2() {
+    ctx.beginPath(); //beginPath() : 도형을 그리기전에 꼭 먼저 선언
+    //ctx.arc(x2, y2, ballSize, 0, Math.PI*2)
+    ctx.arc(x2, y, ballSize, 0, Math.PI*2) //원을 그리려면 arc를 사용해야함
+    ctx.fillStyle = "red";
+    x2 += dx2; //게임을 시작할때 공이 왼쪽으로 움직임
+    ctx.fill(); //경로의 내부를 채워서 내부가 채워진 도형을 그림
+    ctx.closePath(); //closePath() : 다 그렸으면 마지막에 꼭 선언
+
+    //패달을 밟았을때 튕겨져 나가는 함수
+    if(y + dy > canvas.height-ballSize) { //위쪽 벽이나  아래쪽 벽에 부딪치면
+        if(x2 > px && x2 < px + pWidth) { //패들안에 들어가면 + && x2 > px && x2 < px + pWidth 이걸 추가해서 두번째 공 기능도 넣음
+                dy = -dy; //방향전환
+        }
+        else{
+            //함수를 지우는 소스를 넣어야함(공부중)
+        }
+    }
+    
 }
 
 //패달을 생성하는 함수
@@ -124,20 +157,11 @@ function drawBricks() {
   }
 }
 
-//볼을 여러개 생성하는 함수
-function drawBall2() {
-    ctx.beginPath(); //beginPath() : 도형을 그리기전에 꼭 먼저 선언
-    //ctx1.arc(y, x, ballSize, 0, Math.PI*2)
-    ctx.arc(x2, y2, ballSize, 0, Math.PI*2)
-    ctx.arc(x2, y, ballSize, 0, Math.PI*2) //원을 그리려면 arc를 사용해야함
-    //주의 : 호나 원을 그리기위해서는 arc() 혹은 arcTo() 메소드를 사용
-    //예시 - arc(x, y, radius, startAngle, endAngle, anticlockwise)
-    //(x, y) 위치에 원점을 두면서, 반지름 r을 가지고,  startAngle 에서 시작하여 endAngle 에서 끝나며 주어진 anticlockwise 방향으로 향하는 (기본값은 시계방향 회전) 호를 그리게 됨.
+//패달 길이가 짧아지는 함수
+function paddleS(){
 
-    ctx.fillStyle = "red";
-    ctx.fill(); //경로의 내부를 채워서 내부가 채워진 도형을 그림
-    ctx.closePath(); //closePath() : 다 그렸으면 마지막에 꼭 선언
 }
+
 
 //점수 함수
 function drawScore() {
@@ -153,28 +177,38 @@ function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); //화면지우기
     drawBricks();
     drawBall(); //공 생성
-    drawPaddle(); //패달 생성
     drawBall2();
+    drawPaddle(); //패달 생성
     colCheck();
-    
     drawScore();
+
+    //console.log(life);
     
     if(x + dx > canvas.width-ballSize || x + dx < ballSize) { //오른쪽 벽이나 왼쪽 벽에 부딪치면
         dx = -dx; //방향 전환
+        //dx2 = -dx2; 이거 넣으니까 공이 다시 이상한대로 튐
     }
     if(y + dy < ballSize) { //상단벽일 경우 방향을 바꿈
         dy = -dy; //방향 전환
     }
+
+    //------------------두번째 공 함수
+    if(x2 + dx2 > canvas.width-ballSize || x2 + dx2 < ballSize) { //오른쪽 벽이나 왼쪽 벽에 부딪치면
+        dx2 = -dx2; //방향 전환
+    }
+    
     else if(y + dy > canvas.height-ballSize) { //위쪽 벽이나  아래쪽 벽에 부딪치면
-        if(x > px && x < px + pWidth) { //패들안에 들어가면
+        if(x > px && x < px + pWidth) { //패들안에 들어가면 + && x2 > px && x2 < px + pWidth 이걸 추가해서 두번째 공 기능도 넣음
                 dy = -dy; //방향전환
         }
         else {
             alert("게임 종료");
             document.location.reload(); //새로고침
             clearInterval(interval); //진행중인 interval을 없애줌
+            }
         }
     }
+
     
     if(rPressed && px < canvas.width-pWidth) { //(화면 - 패들넓이)/2
         px += 7; //오른쪽으로 7 만큼 이동
@@ -182,9 +216,11 @@ function update() {
     else if(lPressed && px >0) {
         px -= 7; //왼쪽으로 7만큼 이동
     }
+
     //dx, dy가 2로 설정되어 있기때문에 인터벌인 10밀리세컨드당 대각선으로 움직임
     x += dx; //x좌표 변경
     y += dy; //y좌표 변경
+
 }
 
 let interval = setInterval(update, 10); //10밀리세컨드마다 update 함수를 실행

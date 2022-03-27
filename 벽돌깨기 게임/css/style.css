@@ -24,7 +24,14 @@ body{
 
 .method{
     text-align: center;
-    margin: 30px;
+    margin-top: 10px;
     background-color: beige;
+    padding: 1rem; 
+}
+
+.lifeCount{
+    text-align: center;
+    margin-top: 10px;
+    background-color: rgb(31, 195, 224);
     padding: 1rem; 
 }
