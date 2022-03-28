@@ -141,17 +141,6 @@ function checkMatch(){ //같은줄을 지우는 함수
             if(score % 10 == 0){ //10점마다 단계를 상승
                 stageUP()
             }
-            // switch(score){
-            //     case 3:
-            //         stageUP();
-            //         break;
-            //     case 5:
-            //         stageUP();
-            //         break;
-            //     case 10:
-            //         stageUP();
-            //         break;
-            // }
         }
     })
     generateNewBlock()
